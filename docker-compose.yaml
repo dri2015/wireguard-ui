@@ -9,15 +9,13 @@ services:
       - NET_ADMIN
     network_mode: host
     environment:
-      - SENDGRID_API_KEY
       - EMAIL_FROM_ADDRESS
-      - EMAIL_FROM_NAME
-      - SESSION_SECRET
+      - EMAIL_FROM_NAME=gowo.tv
       - WGUI_USERNAME=alpha
       - WGUI_PASSWORD=this-unusual-password
-      - WG_CONF_TEMPLATE
-      - WGUI_MANAGE_START=false
-      - WGUI_MANAGE_RESTART=false
+      - WGUI_MANAGE_START=true
+      - WGUI_MANAGE_RESTART=true
+      - WGUI_DNS=10.13.13.1
     logging:
       driver: json-file
       options:
