@@ -9,6 +9,7 @@ services:
     volumes:
       - ./config:/config
     ports:
+      - "5000:5000"
       - "51820:51820/udp"
     environment:
       - INTERNAL_SUBNET=10.13.13.0
@@ -26,12 +27,17 @@ services:
     cap_add:
       - NET_ADMIN
     # use the network of the 'wireguard' service. this enables to show active clients in the status page
-    network_mode: host
+    network_mode: service:wireguard
     environment:
       - WGUI_USERNAME=admin
       - WGUI_PASSWORD=admin
       - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=true
+      - WGUI_SERVER_INTERFACE_ADDRESSES="10.13.13.0/24,10.252.1.0/24"
+      - WGUI_SERVER_LISTEN_PORT=51820
+      - WGUI_SERVER_POST_UP_SCRIPT="iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE"
+      - WGUI_SERVER_POST_DOWN_SCRIPT="iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE"
+      - WGUI_DEFAULT_CLIENT_ALLOWED_IPS="0.0.0.0/0"
     logging:
       driver: json-file
       options:
