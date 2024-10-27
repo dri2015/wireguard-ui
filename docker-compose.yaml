@@ -39,8 +39,8 @@ services:
       - EMAIL_FROM_ADDRESS
       - EMAIL_FROM_NAME
       - SESSION_SECRET
-      - WGUI_USERNAME=durbok
-      - WGUI_PASSWORD=urpasshere
+      - WGUI_USERNAME=admin
+      - WGUI_PASSWORD=admin
       - WG_CONF_TEMPLATE
     logging:
       driver: json-file
