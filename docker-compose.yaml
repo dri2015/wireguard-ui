@@ -9,8 +9,14 @@ services:
     volumes:
       - ./config:/config
     ports:
-      # port of the wireguard server
       - "51820:51820/udp"
+    environment:
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0
+      - SERVERPORT=51820
+      - LOG_CONFS=true
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
 
   wireguard-ui:
     image: ngoduykhanh/wireguard-ui:latest
@@ -22,13 +28,8 @@ services:
     # use the network of the 'wireguard' service. this enables to show active clients in the status page
     network_mode: host
     environment:
-      - SENDGRID_API_KEY
-      - EMAIL_FROM_ADDRESS
-      - EMAIL_FROM_NAME
-      - SESSION_SECRET
       - WGUI_USERNAME=admin
       - WGUI_PASSWORD=admin
-      - WG_CONF_TEMPLATE
       - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=true
     logging:
