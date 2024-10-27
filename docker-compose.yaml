@@ -9,6 +9,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+#     - TZ=Europe/London
+#      - SERVERURL=wireguard.kafana.dev #optional
       - SERVERPORT=51820 #optional
       - PEERS=1 #optional
       - PEERDNS=auto #optional
@@ -37,15 +39,9 @@ services:
       - EMAIL_FROM_ADDRESS
       - EMAIL_FROM_NAME
       - SESSION_SECRET
-      - WGUI_USERNAME=admin
-      - WGUI_PASSWORD=admin
+      - WGUI_USERNAME=durbok
+      - WGUI_PASSWORD=urpasshere
       - WG_CONF_TEMPLATE
-      - WGUI_SERVER_INTERFACE_ADDRESSES=10.13.13.0/24
-      - WGUI_SERVER_LISTEN_PORT=51820
-      - WGUI_SERVER_POST_UP_SCRIPT=iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-      - WGUI_SERVER_POST_DOWN_SCRIPT=iptables -D FORWARD -i %i -j ACCEPT; iptables -D FOR -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADEWARD
-      - WGUI_DEFAULT_CLIENT_ALLOWED_IPS=0.0.0.0/0
-      - WGUI_DNS=10.13.13.1,1.1.1.1
     logging:
       driver: json-file
       options:
