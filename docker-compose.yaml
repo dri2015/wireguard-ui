@@ -2,22 +2,29 @@ version: "3"
 
 services:
   wireguard:
-    image: linuxserver/wireguard:latest
+    image: lscr.io/linuxserver/wireguard:latest
     container_name: wireguard
     cap_add:
       - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SERVERPORT=51820 #optional
+      - PEERS=1 #optional
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true #optional
     volumes:
       - ./config:/config
+      - /lib/modules:/lib/modules
     ports:
-      - "5000:5000"
-      - "51820:51820/udp"
-    environment:
-      - INTERNAL_SUBNET=10.13.13.0
-      - ALLOWEDIPS=0.0.0.0/0
-      - SERVERPORT=51820
-      - LOG_CONFS=true
+      - 51820:51820/udp
+      - 0.0.0.0:5000:5000
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
 
   wireguard-ui:
     image: ngoduykhanh/wireguard-ui:latest
@@ -35,8 +42,8 @@ services:
       - WGUI_MANAGE_RESTART=true
       - WGUI_SERVER_INTERFACE_ADDRESSES="10.13.13.0/24,10.252.1.0/24"
       - WGUI_SERVER_LISTEN_PORT=51820
-      - WGUI_SERVER_POST_UP_SCRIPT="iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE"
-      - WGUI_SERVER_POST_DOWN_SCRIPT="iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE"
+      - WGUI_SERVER_POST_UP_SCRIPT="iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE"
+      - WGUI_SERVER_POST_DOWN_SCRIPT="iptables -D FORWARD -i %i -j ACCEPT; iptables -D FOR -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADEWARD"
       - WGUI_DEFAULT_CLIENT_ALLOWED_IPS="0.0.0.0/0"
     logging:
       driver: json-file
