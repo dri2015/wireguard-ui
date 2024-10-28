@@ -38,7 +38,7 @@ services:
       - WGUI_SERVER_POST_DOWN_SCRIPT=iptables -D FORWARD -i %i -j ACCEPT; iptables -D FOR -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADEWARD
       - WGUI_DEFAULT_CLIENT_ALLOWED_IPS=0.0.0.0/0
       - WGUI_DNS=10.13.13.1,1.1.1.1
-      - WGUI_MANAGE_START=false
+      - WGUI_MANAGE_START=true
       - WGUI_MANAGE_RESTART=false
     logging:
       driver: json-file
