@@ -8,9 +8,8 @@ services:
     volumes:
       - ./config:/config
     ports:
-      # port for wireguard-ui. this must be set here as the `wireguard-ui` container joins the network of this container and hasn't its own network over which it could publish the ports
-      # port of the wireguard server
       - "51820:51820/udp"
+      - "0.0.0.0:5000:5000"
 
   wireguard-ui:
     image: ngoduykhanh/wireguard-ui:latest
@@ -20,7 +19,7 @@ services:
     cap_add:
       - NET_ADMIN
     # use the network of the 'wireguard' service. this enables to show active clients in the status page
-    network_mode: host
+    network_mode: service:wireguard
     environment:
       - SENDGRID_API_KEY
       - EMAIL_FROM_ADDRESS
