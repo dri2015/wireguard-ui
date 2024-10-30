@@ -2,7 +2,7 @@ vpn.gowo.tv {
     reverse_proxy http://wireguard:5000
 }
 
-http://vpn.gowo.tv, http://75.119.130.172:5000 {
+http://vpn.gowo.tv {
     redir https://vpn.gowo.tv{uri} permanent
 }
 
