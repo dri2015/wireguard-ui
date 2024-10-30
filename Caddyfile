@@ -6,6 +6,6 @@ http://vpn.gowo.tv {
     redir https://vpn.gowo.tv{uri} permanent
 }
 
-http://75.119.130.172:5000 {
+75.119.130.172:5000 {
     redir https://75.119.130.172:5000{uri} permanent
 }
