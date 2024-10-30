@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   wireguard-ui:
-    image: ngoduykhanh/wireguard-ui:latest
+    build: .
     container_name: wireguard-ui
     depends_on:
       - wireguard
