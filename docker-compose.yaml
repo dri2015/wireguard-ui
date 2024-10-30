@@ -55,8 +55,6 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
-    networks:
-      - webproxy
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./caddy_data:/data
