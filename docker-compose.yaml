@@ -11,7 +11,7 @@ services:
       - /lib/modules:/lib/modules
     ports:
       - "51820:51820/udp"
-      - "0.0.0.0:5000:5000"
+      - "0.0.0.0:5000:80"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
@@ -47,3 +47,19 @@ services:
     volumes:
       - ./config:/app/db
       - ./config/wg_confs:/etc/wireguard
+
+  caddy:
+    image: caddy:2.7.4-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    networks:
+      - webproxy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy_data:/data
+      - ./caddy_config:/config
+    environment:
+      env_domain: "gowo.tv"
