@@ -1,5 +1,5 @@
 vpn.gowo.tv {
-    reverse_proxy http://wireguard-ui:80
+    reverse_proxy http://wireguard:80
 }
 
 http://vpn.gowo.tv {
