@@ -11,7 +11,7 @@ services:
       - /lib/modules:/lib/modules
     ports:
       - "51820:51820/udp"
-      - "0.0.0.0:5000:80"
+      - "0.0.0.0:5000:5000"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
