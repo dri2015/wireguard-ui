@@ -46,11 +46,12 @@ RUN mkdir -p assets/plugins && \
     /build/node_modules/jquery-tags-input/ \
     assets/plugins/
 
+# Move custom assets
+RUN mkdir -p assets/custom && \
+    cp -r /build/custom/ assets/
+
 # Add sources
 COPY . /build
-
-# Move custom assets
-#RUN cp -r /build/custom/ assets/
 
 # Build
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-X 'main.appVersion=${APP_VERSION}' -X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}'" -a -o wg-ui .
