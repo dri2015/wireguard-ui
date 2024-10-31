@@ -49,7 +49,6 @@ RUN mkdir -p assets/plugins && \
 # Add sources
 COPY . /build
 
-RUN ls -R assets/custom
 # Move custom assets
 RUN cp -r /build/custom/ assets/
 RUN ls -R assets/custom
