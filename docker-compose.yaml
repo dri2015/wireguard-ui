@@ -45,7 +45,6 @@ services:
       options:
         max-size: 50m
     volumes:
-      - ./custom:/app/assets
       - ./config:/app/db
       - ./config/wg_confs:/etc/wireguard
 
