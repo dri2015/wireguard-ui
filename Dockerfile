@@ -50,7 +50,7 @@ RUN mkdir -p assets/plugins && \
 COPY . /build
 
 # Move custom assets
-RUN cp -r /build/custom/ assets/
+RUN cp -r custom/ assets/custom
 RUN ls -R assets
 
 # Build
