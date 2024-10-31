@@ -51,7 +51,7 @@ COPY . /build
 
 # Move custom assets
 RUN cp -r /build/custom/ assets/
-RUN ls -R assets/plugins
+RUN ls -R assets
 
 # Build
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-X 'main.appVersion=${APP_VERSION}' -X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}'" -a -o wg-ui .
