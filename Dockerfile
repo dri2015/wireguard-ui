@@ -50,7 +50,7 @@ RUN mkdir -p assets/plugins && \
 COPY . /build
 
 # Move custom assets
-RUN cp -r /build/custom/ assets/custom/
+RUN cp -r custom/ assets/custom/
 
 # Build
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-X 'main.appVersion=${APP_VERSION}' -X 'main.buildTime=${BUILD_TIME}' -X 'main.gitCommit=${GIT_COMMIT}'" -a -o wg-ui .
